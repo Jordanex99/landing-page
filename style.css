@@ -1,0 +1,703 @@
+/* ==========================================================================
+   EDEN — Global Stylesheet
+   Old Money elegance x Streetwear freedom.
+   Motif: ดอกไม้ & ผีเสื้อ (floral & butterfly line-work)
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Taviraj:ital,wght@0,300;0,400;0,500;0,600;1,400&family=IBM+Plex+Sans+Thai:wght@300;400;500;600&display=swap');
+
+/* --------------------------------------------------------------------------
+   1. DESIGN TOKENS
+   -------------------------------------------------------------------------- */
+:root {
+  /* Colors */
+  --color-navy: #1C2541;
+  --color-navy-deep: #12182C;
+  --color-navy-soft: #2C3A5C;
+  --color-cream: #F3EDE2;
+  --color-cream-soft: #FAF7F0;
+  --color-white: #FFFFFF;
+  --color-ink: #14161F;
+  --color-gold: #A78355;
+  --color-gold-soft: #C9AF87;
+  --color-line: #D9D0BC;
+  --color-line-dark: #3C4A6B;
+
+  /* Typography */
+  --font-display: 'Taviraj', 'Cormorant Garamond', serif;
+  --font-body: 'IBM Plex Sans Thai', 'IBM Plex Sans', -apple-system, sans-serif;
+
+  --fs-h1: clamp(2.5rem, 4.5vw, 4rem);
+  --fs-h2: clamp(1.85rem, 3vw, 2.6rem);
+  --fs-h3: clamp(1.25rem, 2vw, 1.5rem);
+  --fs-body-lg: 1.125rem;
+  --fs-body: 1rem;
+  --fs-small: 0.875rem;
+  --fs-tiny: 0.75rem;
+
+  --lh-display: 1.15;
+  --lh-body: 1.7;
+
+  /* Spacing scale */
+  --space-xs: 0.5rem;
+  --space-sm: 1rem;
+  --space-md: 1.75rem;
+  --space-lg: 3rem;
+  --space-xl: 5rem;
+  --space-2xl: 8rem;
+
+  /* Layout */
+  --container-max: 1200px;
+  --container-pad: clamp(1.25rem, 4vw, 3rem);
+  --radius-sharp: 2px;
+  --radius-pill: 999px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur: 0.35s;
+}
+
+/* --------------------------------------------------------------------------
+   2. RESET & BASE
+   -------------------------------------------------------------------------- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--color-cream-soft);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--font-display);
+  line-height: var(--lh-display);
+  font-weight: 500;
+  margin: 0;
+  color: var(--color-navy);
+}
+
+h1 { font-size: var(--fs-h1); }
+h2 { font-size: var(--fs-h2); }
+h3 { font-size: var(--fs-h3); }
+
+p {
+  margin: 0;
+  max-width: 62ch;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+:focus-visible {
+  outline: 2px solid var(--color-gold);
+  outline-offset: 3px;
+}
+
+/* --------------------------------------------------------------------------
+   3. LAYOUT PRIMITIVES
+   -------------------------------------------------------------------------- */
+.container {
+  max-width: var(--container-max);
+  margin-inline: auto;
+  padding-inline: var(--container-pad);
+}
+
+.section {
+  padding-block: var(--space-2xl);
+}
+
+.section--tight {
+  padding-block: var(--space-xl);
+}
+
+.section-head {
+  margin-bottom: var(--space-lg);
+  max-width: 40rem;
+}
+
+.section-head p {
+  margin-top: var(--space-sm);
+  color: var(--color-navy-soft);
+  font-size: var(--fs-body-lg);
+}
+
+.section--dark {
+  background: var(--color-navy);
+  color: var(--color-cream);
+}
+
+.section--dark h1,
+.section--dark h2,
+.section--dark h3 {
+  color: var(--color-white);
+}
+
+.section--dark p {
+  color: var(--color-gold-soft);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-lg);
+}
+
+.grid--products {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+@media (max-width: 900px) {
+  .grid--products {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+}
+
+@media (max-width: 600px) {
+  .grid--products {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hr {
+  border: none;
+  border-top: 1px solid var(--color-line);
+  margin: 0;
+}
+
+.section--dark .hr {
+  border-top-color: var(--color-line-dark);
+}
+
+/* --------------------------------------------------------------------------
+   4. HEADER / NAV
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(250, 247, 240, 0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--color-line);
+}
+
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-block: var(--space-sm);
+}
+
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  letter-spacing: 0.14em;
+  color: var(--color-navy);
+  font-weight: 500;
+}
+
+.nav-links {
+  display: flex;
+  gap: var(--space-md);
+  font-size: var(--fs-small);
+  color: var(--color-navy-soft);
+}
+
+.nav-links a {
+  position: relative;
+  transition: color var(--dur) var(--ease);
+}
+
+.nav-links a:hover {
+  color: var(--color-navy);
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 1px;
+  background: var(--color-gold);
+  transition: width var(--dur) var(--ease);
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* --------------------------------------------------------------------------
+   5. BUTTONS — the one bold, rounded element on the page
+   -------------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.85rem 2rem;
+  border-radius: var(--radius-pill);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  border: 1px solid transparent;
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease), transform var(--dur) var(--ease);
+}
+
+.btn:active {
+  transform: scale(0.97);
+}
+
+.btn-primary {
+  background: var(--color-navy);
+  color: var(--color-cream-soft);
+}
+
+.btn-primary:hover {
+  background: var(--color-navy-deep);
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--color-navy);
+  color: var(--color-navy);
+}
+
+.btn-outline:hover {
+  background: var(--color-navy);
+  color: var(--color-cream-soft);
+}
+
+.section--dark .btn-outline {
+  border-color: var(--color-cream);
+  color: var(--color-cream);
+}
+
+.section--dark .btn-outline:hover {
+  background: var(--color-cream);
+  color: var(--color-navy);
+}
+
+/* --------------------------------------------------------------------------
+   6. HERO
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  padding-block: var(--space-2xl);
+  overflow: hidden;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%231C2541' stroke-opacity='0.05' stroke-width='1.2'%3E%3Cpath d='M120 60c-14-20-42-20-48 2-4 16 10 28 48 46 38-18 52-30 48-46-6-22-34-22-48-2z'/%3E%3Cline x1='120' y1='60' x2='120' y2='140'/%3E%3Ccircle cx='120' cy='150' r='4'/%3E%3Cpath d='M40 200c8-10 24-10 28 2s-10 16-28 10c-2-6-2-10 0-12z'/%3E%3Cpath d='M190 40c8-10 24-10 28 2s-10 16-28 10c-2-6-2-10 0-12z'/%3E%3C/g%3E%3C/svg%3E");
+  background-repeat: repeat;
+}
+
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: var(--space-lg);
+  align-items: center;
+}
+
+@media (max-width: 900px) {
+  .hero-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.hero-eyebrow {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-body-lg);
+  color: var(--color-gold);
+  margin-bottom: var(--space-sm);
+}
+
+.hero h1 {
+  margin-bottom: var(--space-md);
+}
+
+.hero-actions {
+  display: flex;
+  gap: var(--space-sm);
+  margin-top: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.hero-visual {
+  aspect-ratio: 4 / 5;
+  background: var(--color-navy);
+  border-radius: var(--radius-sharp);
+  overflow: hidden;
+}
+
+.hero-visual img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --------------------------------------------------------------------------
+   7. PRODUCT CARD
+   -------------------------------------------------------------------------- */
+.product-card {
+  display: flex;
+  flex-direction: column;
+}
+
+.product-media {
+  aspect-ratio: 3 / 4;
+  background: var(--color-navy);
+  border-radius: var(--radius-sharp);
+  overflow: hidden;
+  margin-bottom: var(--space-sm);
+  position: relative;
+}
+
+.product-media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+
+.product-card:hover .product-media img {
+  transform: scale(1.04);
+}
+
+.product-tag {
+  position: absolute;
+  top: var(--space-xs);
+  left: var(--space-xs);
+  font-size: var(--fs-tiny);
+  font-family: var(--font-body);
+  letter-spacing: 0.04em;
+  color: var(--color-navy);
+  background: var(--color-cream-soft);
+  padding: 0.25rem 0.65rem;
+  border-radius: var(--radius-pill);
+}
+
+.product-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: var(--space-sm);
+  padding-top: var(--space-xs);
+  border-top: 1px solid var(--color-line);
+}
+
+.product-name {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--color-navy);
+}
+
+.product-type {
+  display: block;
+  font-size: var(--fs-tiny);
+  color: var(--color-navy-soft);
+  margin-top: 0.2rem;
+}
+
+.product-price {
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  color: var(--color-gold);
+  white-space: nowrap;
+}
+
+.product-sizes {
+  display: flex;
+  gap: 0.4rem;
+  margin-top: var(--space-xs);
+}
+
+.product-sizes span {
+  font-size: var(--fs-tiny);
+  color: var(--color-navy-soft);
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sharp);
+  padding: 0.15rem 0.5rem;
+}
+
+/* --------------------------------------------------------------------------
+   8. FOOTER
+   -------------------------------------------------------------------------- */
+.site-footer {
+  background: var(--color-navy);
+  color: var(--color-cream-soft);
+  padding-block: var(--space-lg);
+}
+
+.footer-grid {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-lg);
+  flex-wrap: wrap;
+}
+
+.footer-logo {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  letter-spacing: 0.14em;
+  color: var(--color-white);
+}
+
+.footer-links {
+  display: flex;
+  gap: var(--space-lg);
+  font-size: var(--fs-small);
+  color: var(--color-gold-soft);
+}
+
+.footer-links a:hover {
+  color: var(--color-white);
+}
+
+.footer-bottom {
+  margin-top: var(--space-lg);
+  padding-top: var(--space-sm);
+  border-top: 1px solid var(--color-line-dark);
+  font-size: var(--fs-tiny);
+  color: var(--color-line-dark);
+}
+
+/* --------------------------------------------------------------------------
+   9. FILTER BAR (product.html — rendered by script.js)
+   -------------------------------------------------------------------------- */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs);
+  margin-bottom: var(--space-lg);
+}
+
+.filter-btn {
+  padding: 0.55rem 1.4rem;
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--color-navy);
+  background: transparent;
+  color: var(--color-navy);
+  font-family: var(--font-body);
+  font-size: var(--fs-small);
+  transition: background var(--dur) var(--ease), color var(--dur) var(--ease);
+}
+
+.filter-btn:hover {
+  background: var(--color-cream);
+}
+
+.filter-btn.is-active {
+  background: var(--color-navy);
+  color: var(--color-cream-soft);
+}
+
+/* --------------------------------------------------------------------------
+   10. CATEGORY CARDS (index.html)
+   -------------------------------------------------------------------------- */
+.category-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-md);
+}
+
+@media (max-width: 700px) {
+  .category-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.category-card {
+  position: relative;
+  display: flex;
+  align-items: flex-end;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+  border-radius: var(--radius-sharp);
+  background: var(--color-navy);
+}
+
+.category-card img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s var(--ease);
+}
+
+.category-card:hover img {
+  transform: scale(1.05);
+}
+
+.category-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(18, 24, 44, 0.78), transparent 60%);
+}
+
+.category-label {
+  position: relative;
+  z-index: 1;
+  padding: var(--space-md);
+  color: var(--color-white);
+}
+
+.category-label span {
+  display: block;
+  font-family: var(--font-display);
+  font-size: var(--fs-h3);
+}
+
+.category-label small {
+  color: var(--color-gold-soft);
+  font-size: var(--fs-small);
+}
+
+/* --------------------------------------------------------------------------
+   11. FORMS (order.html)
+   -------------------------------------------------------------------------- */
+.form-grid {
+  display: grid;
+  gap: var(--space-md);
+  max-width: 36rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.form-field label {
+  font-size: var(--fs-small);
+  color: var(--color-navy-soft);
+}
+
+.form-field input,
+.form-field textarea {
+  font-family: var(--font-body);
+  font-size: var(--fs-body);
+  padding: 0.8rem 1rem;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sharp);
+  background: var(--color-white);
+  color: var(--color-ink);
+}
+
+.form-field textarea {
+  resize: vertical;
+  min-height: 6rem;
+}
+
+.form-field input:focus,
+.form-field textarea:focus {
+  border-color: var(--color-gold);
+  outline: none;
+}
+
+.form-field input[readonly] {
+  background: var(--color-cream);
+  color: var(--color-navy-soft);
+}
+
+/* --------------------------------------------------------------------------
+   12. DATA TABLE (admin.html)
+   -------------------------------------------------------------------------- */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--color-line);
+  border-radius: var(--radius-sharp);
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--fs-small);
+  min-width: 720px;
+}
+
+.data-table thead {
+  background: var(--color-navy);
+  color: var(--color-cream-soft);
+}
+
+.data-table th,
+.data-table td {
+  padding: 0.85rem 1.1rem;
+  text-align: left;
+  border-bottom: 1px solid var(--color-line);
+  white-space: nowrap;
+}
+
+.data-table tbody tr:hover {
+  background: var(--color-cream);
+}
+
+.data-table tbody:empty::after {
+  content: '';
+}
+
+/* --------------------------------------------------------------------------
+   13. UTILITIES
+   -------------------------------------------------------------------------- */
+.text-center { text-align: center; }
+.text-gold { color: var(--color-gold); }
+.mx-auto { margin-inline: auto; }
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}

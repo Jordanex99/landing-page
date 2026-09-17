@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ยืนยันคำสั่งซื้อ — Eden</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="nav-logo">EDEN</a>
+      <nav class="nav-links">
+        <a href="index.html">หน้าแรก</a>
+        <a href="product.html">สินค้าทั้งหมด</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h2>ยืนยันคำสั่งซื้อ</h2>
+        <p>กรอกข้อมูลให้ครบถ้วน ทีมงาน Eden จะติดต่อกลับเพื่อยืนยันการจัดส่ง</p>
+      </div>
+
+      <form id="order-form" class="form-grid">
+        <div class="form-field">
+          <label for="customerName">ชื่อ-นามสกุล</label>
+          <input type="text" id="customerName" name="customerName" required>
+        </div>
+
+        <div class="form-field">
+          <label for="contact">เบอร์โทร / Line ID</label>
+          <input type="text" id="contact" name="contact" required>
+        </div>
+
+        <div class="form-field">
+          <label for="items">รายการสินค้า</label>
+          <input type="text" id="items" name="items" required>
+        </div>
+
+        <div class="form-field">
+          <label for="total">จำนวนเงินรวม (บาท)</label>
+          <input type="text" id="total" name="total" required>
+        </div>
+
+        <div class="form-field">
+          <label for="note">หมายเหตุการจัดส่ง</label>
+          <textarea id="note" name="note" placeholder="ที่อยู่จัดส่ง หรือรายละเอียดเพิ่มเติม (ถ้ามี)"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">ยืนยันสั่งซื้อ</button>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <span class="footer-logo">EDEN</span>
+      <ul class="footer-links">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="product.html">สินค้าทั้งหมด</a></li>
+      </ul>
+    </div>
+    <div class="container footer-bottom">© 2026 Eden. All rights reserved.</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

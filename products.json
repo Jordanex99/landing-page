@@ -1,0 +1,32 @@
+[
+  {
+    "id": "eden-signature-puffer",
+    "name": "Eden Signature Butterfly Puffer",
+    "mood": "streetwear",
+    "type": "Puffer Jacket",
+    "size": ["L", "XL", "3XL"],
+    "price": 1290,
+    "image": "images/eden-signature-puffer.jpg",
+    "description": "แจ็คเก็ตพัฟเฟอร์ทรงโอเวอร์ไซส์สีดำ ปักลายผีเสื้อและดอกไม้โทนครีม-ทองรอบโลโก้ EDEN บนอก ซิกเนเจอร์ประจำแบรนด์ที่ให้ทั้งความอบอุ่นและความเท่แบบ Streetwear"
+  },
+  {
+    "id": "eden-old-money-sweatshirt",
+    "name": "Eden Old Money Sweatshirt",
+    "mood": "classic",
+    "type": "Sweatshirt",
+    "size": ["M", "L", "XL"],
+    "price": 990,
+    "image": "images/eden-old-money-sweatshirt.jpg",
+    "description": "เสื้อสเวตเชิ้ตคอกลมสีครีม พิมพ์ลายดอกไม้และผีเสื้อโทนกรมท่า-ทองใต้โลโก้ EDEN นุ่มสบายแต่ยังคงความประณีตแบบ Old Money"
+  },
+  {
+    "id": "eden-floral-emblem-tee",
+    "name": "Eden Floral Emblem Tee",
+    "mood": "streetwear",
+    "type": "T-Shirt",
+    "size": ["L", "XL", "3XL"],
+    "price": 790,
+    "image": "images/eden-floral-emblem-tee.jpg",
+    "description": "เสื้อยืดทรงโอเวอร์ไซส์สีดำ พิมพ์ช่อดอกไม้และผีเสื้อโทนครีม-ทองรอบโลโก้ EDEN พร้อมปี EST. MMXXVI บอกตัวตนของแบรนด์ในทุกดีเทล"
+  }
+]
