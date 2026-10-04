@@ -4,7 +4,7 @@
    ========================================================================== */
 
 // TODO: แทนที่ด้วย URL Web App ของ Google Apps Script ที่คุณ Deploy ไว้
-const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyM81wVpgFx_pO6YLFUSyeHa_COdWm--s8xI9EJrWTPq2Tm6GCzLWbMl38hdL105lJ2/exec';
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbx9hz5OBDw6aI439jS2TGeODVp4IiGonlivMmGzNUYzBHwlYVdFfe5S9mYFexI7NNTS/exec';
 
 // Supabase — ที่เก็บข้อมูลสินค้า (ตาราง products)
 const SUPABASE_URL = 'https://qoyihktwnohupwwhusvt.supabase.co';
