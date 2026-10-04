@@ -6,9 +6,14 @@
 // TODO: แทนที่ด้วย URL Web App ของ Google Apps Script ที่คุณ Deploy ไว้
 const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbzETC-N8FNtCfS5f5CsOF-M7l9e0mb7SelUjQs1d4wQXGkZ2xtQ6u_RUxwJs4Ua_lx3/exec';
 
+// Supabase — ที่เก็บข้อมูลสินค้า (ตาราง products)
+const SUPABASE_URL = 'https://qoyihktwnohupwwhusvt.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_cf7T1u9h5hWZbaqvwA1S5w_cwl6NoMa';
+
 document.addEventListener('DOMContentLoaded', () => {
   initProductPage();
   initOrderPage();
+  initPosPage();
 });
 
 /* --------------------------------------------------------------------------
@@ -54,7 +59,12 @@ function initProductPage() {
     });
   }
 
-  fetch('products.json')
+  fetch(`${SUPABASE_URL}/rest/v1/products?select=*&order=created_at.asc`, {
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+    },
+  })
     .then((res) => res.json())
     .then((data) => {
       products = data;
@@ -144,6 +154,111 @@ function initOrderPage() {
       .catch((err) => {
         console.error('ส่งคำสั่งซื้อไม่สำเร็จ:', err);
         alert('เกิดข้อผิดพลาดในการส่งคำสั่งซื้อ กรุณาลองใหม่อีกครั้ง');
+      });
+  });
+}
+
+/* --------------------------------------------------------------------------
+   pos.html — บันทึกยอดขายหน้าร้าน (ไว้ดูสรุปใน Google Sheet แท็บ "POS")
+   หมายเหตุ: ตัวเลข "คงเหลือ" ดึงมาจาก Supabase ตอนโหลดหน้าเฉยๆ ไม่ได้ตัดสต็อก
+   อัตโนมัติ — ต้องไปอัปเดตคอลัมน์ stock ใน Supabase เองหลังนับของจริง
+   -------------------------------------------------------------------------- */
+function initPosPage() {
+  const form = document.getElementById('pos-form');
+  if (!form) return;
+
+  const productSelect = document.getElementById('pos-product');
+  const stockField = document.getElementById('pos-stock');
+  const qtyField = document.getElementById('pos-qty');
+  const priceField = document.getElementById('pos-price');
+  const totalField = document.getElementById('pos-total');
+  const statusEl = document.getElementById('pos-status');
+
+  let products = [];
+
+  fetch(`${SUPABASE_URL}/rest/v1/products?select=*&order=name.asc`, {
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: `Bearer ${SUPABASE_ANON_KEY}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      products = data;
+      productSelect.innerHTML = products
+        .map((p) => `<option value="${p.id}">${p.name} (คงเหลือ ${p.stock ?? '-'})</option>`)
+        .join('');
+      fillFromSelection();
+    })
+    .catch((err) => {
+      console.error('โหลดสินค้าไม่สำเร็จ:', err);
+      productSelect.innerHTML = '<option value="">โหลดสินค้าไม่สำเร็จ</option>';
+    });
+
+  function fillFromSelection() {
+    const selected = products.find((p) => p.id === productSelect.value);
+    if (!selected) return;
+    stockField.value = selected.stock ?? '-';
+    priceField.value = selected.price;
+    updateTotal();
+  }
+
+  function updateTotal() {
+    const qty = Number(qtyField.value) || 0;
+    const price = Number(priceField.value) || 0;
+    totalField.value = (qty * price).toLocaleString('th-TH');
+  }
+
+  productSelect.addEventListener('change', fillFromSelection);
+  qtyField.addEventListener('input', updateTotal);
+  priceField.addEventListener('input', updateTotal);
+
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const selected = products.find((p) => p.id === productSelect.value);
+    const qty = Number(qtyField.value) || 0;
+    const price = Number(priceField.value) || 0;
+
+    const payload = {
+      type: 'pos_sale',
+      productId: selected ? selected.id : productSelect.value,
+      product: selected ? selected.name : productSelect.value,
+      quantity: qty,
+      unitPrice: price,
+      total: qty * price,
+      note: document.getElementById('pos-note').value,
+    };
+
+    fetch(APPS_SCRIPT_URL, {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    })
+      .then((res) => res.json())
+      .then((result) => {
+        const newStock = result && typeof result.newStock === 'number' ? result.newStock : null;
+
+        statusEl.textContent =
+          newStock === null
+            ? `บันทึกแล้ว: ${payload.product} x${payload.quantity}`
+            : `บันทึกแล้ว: ${payload.product} x${payload.quantity} (คงเหลือ ${newStock})`;
+        statusEl.style.display = 'block';
+
+        // อัปเดตตัวเลขคงเหลือในหน้าให้ตรงกับของจริงทันที ไม่ต้องรีเฟรช
+        if (newStock !== null && selected) {
+          selected.stock = newStock;
+          stockField.value = newStock;
+          const opt = productSelect.querySelector(`option[value="${selected.id}"]`);
+          if (opt) opt.textContent = `${selected.name} (คงเหลือ ${newStock})`;
+        }
+
+        qtyField.value = 1;
+        document.getElementById('pos-note').value = '';
+        updateTotal();
+      })
+      .catch((err) => {
+        console.error('บันทึกยอดขายไม่สำเร็จ:', err);
+        alert('บันทึกยอดขายไม่สำเร็จ กรุณาลองใหม่อีกครั้ง');
       });
   });
 }

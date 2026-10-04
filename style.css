@@ -624,6 +624,7 @@ button {
 }
 
 .form-field input,
+.form-field select,
 .form-field textarea {
   font-family: var(--font-body);
   font-size: var(--fs-body);
@@ -640,6 +641,7 @@ button {
 }
 
 .form-field input:focus,
+.form-field select:focus,
 .form-field textarea:focus {
   border-color: var(--color-gold);
   outline: none;

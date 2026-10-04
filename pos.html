@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>POS — บันทึกยอดขายหน้าร้าน — Eden</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="container nav">
+      <a href="index.html" class="nav-logo">EDEN</a>
+      <nav class="nav-links">
+        <a href="index.html">หน้าแรก</a>
+        <a href="product.html">สินค้าทั้งหมด</a>
+      </nav>
+    </div>
+  </header>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head">
+        <h1>บันทึกยอดขายหน้าร้าน</h1>
+        <p>สำหรับจดยอดขายสด/หน้าร้าน ไม่ใช่ระบบคิดเงินลูกค้าออนไลน์ — บันทึกไว้ดูสรุปทีหลังใน Google Sheet แท็บ "POS"</p>
+      </div>
+
+      <form id="pos-form" class="form-grid">
+        <div class="form-field">
+          <label for="pos-product">สินค้า</label>
+          <select id="pos-product" required>
+            <option value="">— กำลังโหลดสินค้า —</option>
+          </select>
+        </div>
+
+        <div class="form-field">
+          <label for="pos-stock">คงเหลือในระบบ (ก่อนขายครั้งนี้)</label>
+          <input type="text" id="pos-stock" readonly>
+        </div>
+
+        <div class="form-field">
+          <label for="pos-qty">จำนวนที่ขาย</label>
+          <input type="number" id="pos-qty" min="1" value="1" required>
+        </div>
+
+        <div class="form-field">
+          <label for="pos-price">ราคาต่อชิ้น (บาท)</label>
+          <input type="number" id="pos-price" min="0" step="1" required>
+        </div>
+
+        <div class="form-field">
+          <label for="pos-total">ยอดรวม (บาท)</label>
+          <input type="text" id="pos-total" readonly>
+        </div>
+
+        <div class="form-field">
+          <label for="pos-note">หมายเหตุ (ไซส์ / ช่องทางชำระเงิน ฯลฯ)</label>
+          <textarea id="pos-note" placeholder="เช่น ไซส์ L, จ่ายเงินสด"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-primary">บันทึกการขาย</button>
+        <p id="pos-status" class="text-gold" style="display:none;"></p>
+      </form>
+    </div>
+  </section>
+
+  <footer class="site-footer">
+    <div class="container footer-grid">
+      <span class="footer-logo">EDEN</span>
+      <ul class="footer-links">
+        <li><a href="index.html">หน้าแรก</a></li>
+        <li><a href="product.html">สินค้าทั้งหมด</a></li>
+      </ul>
+    </div>
+    <div class="container footer-bottom">© 2026 Eden. All rights reserved.</div>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
